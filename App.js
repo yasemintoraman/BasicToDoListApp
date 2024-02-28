@@ -23,7 +23,7 @@ export default function App() {
   return (
     <View style={styles.appContainer}>
       <TaskInput onAddTask={addTaskHandler} />
-      <View style={styles.inputContainer}>
+      <View style={styles.tasksContainer}>
         <FlatList
           data={dailyTasks}
           renderItem={(itemData) => {
