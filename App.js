@@ -7,7 +7,7 @@ import TaskInput from "./components/TaskInput";
 export default function App() {
   const [dailyTasks, setDailyTasks] = useState([]);
 
-  function addTaskHandler() {
+  function addTaskHandler(enteredTaskText) {
     setDailyTasks((currentDailyTasks) => [
       ...currentDailyTasks,
       { text: enteredTaskText, id: Math.random().toString() },
