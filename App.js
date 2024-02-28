@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Button } from "react-native";
 
 import TaskItem from "./components/TaskItem";
 import TaskInput from "./components/TaskInput";
 
 export default function App() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [dailyTasks, setDailyTasks] = useState([]);
+
+  function startAddTaskHandler() {
+    setModalIsVisible(true);
+  }
 
   function addTaskHandler(enteredTaskText) {
     setDailyTasks((currentDailyTasks) => [
@@ -22,7 +27,12 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <TaskInput onAddTask={addTaskHandler} />
+      <Button
+        title="Add New Task"
+        color="#5e0acc"
+        onPress={startAddTaskHandler}
+      />
+      <TaskInput visible={modalIsVisible} onAddTask={addTaskHandler} />
       <View style={styles.tasksContainer}>
         <FlatList
           data={dailyTasks}
