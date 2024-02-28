@@ -1,20 +1,91 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+  FlatList,
+} from 'react-native';
 
 export default function App() {
+  const [enteredTaskText, setEnteredTaskText] = useState('');
+  const [dailyTasks, setDailyTasks] = useState([]);
+
+  function taskInputHandler(enteredText) {
+    setEnteredTaskText(enteredText);
+  }
+
+  function addTaskHandler() {
+    setDailyTasks((currentDailyTasks) => [
+      ...currentDailyTasks,
+      { text: enteredTaskText, id: Math.random().toString() },
+    ]);
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your daily to-do!"
+          onChangeText={taskInputHandler}
+        />
+        <Button title="Add Task" onPress={addTaskHandler} />
+      </View>
+      <View style={styles.tasksContainer}>
+        <FlatList
+          data={dailyTasks}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.taskItem}>
+                <Text style={styles.taskText}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+          alwaysBounceVertical={false}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    paddingTop: 50,
+    paddingHorizontal: 16,
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc',
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    width: '70%',
+    marginRight: 8,
+    padding: 8,
+  },
+  tasksContainer: {
+    flex: 5,
+  },
+  taskItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: '#5e0acc',
+  },
+  taskText: {
+    color: 'white',
   },
 });
