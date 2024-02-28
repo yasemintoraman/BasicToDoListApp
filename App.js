@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Button,
   TextInput,
-  ScrollView,
   FlatList,
 } from 'react-native';
+
+import TaskItem from './components/TaskItem';
+import TaskInput from './components/TaskInput';
 
 export default function App() {
   const [enteredTaskText, setEnteredTaskText] = useState('');
@@ -38,11 +39,7 @@ export default function App() {
         <FlatList
           data={dailyTasks}
           renderItem={(itemData) => {
-            return (
-              <View style={styles.taskItem}>
-                <Text style={styles.taskText}>{itemData.item.text}</Text>
-              </View>
-            );
+            return <TaskItem text = {itemData.item.text} />;
           }}
           keyExtractor={(item, index) => {
             return item.id;
@@ -78,14 +75,5 @@ const styles = StyleSheet.create({
   },
   tasksContainer: {
     flex: 5,
-  },
-  taskItem: {
-    margin: 8,
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: '#5e0acc',
-  },
-  taskText: {
-    color: 'white',
   },
 });
