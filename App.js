@@ -12,6 +12,10 @@ export default function App() {
     setModalIsVisible(true);
   }
 
+  function endAddTaskHandler(){
+    setModalIsVisible(false);
+  }
+
   function addTaskHandler(enteredTaskText) {
     setDailyTasks((currentDailyTasks) => [
       ...currentDailyTasks,
@@ -32,7 +36,10 @@ export default function App() {
         color="#5e0acc"
         onPress={startAddTaskHandler}
       />
-      <TaskInput visible={modalIsVisible} onAddTask={addTaskHandler} />
+      <TaskInput visible={modalIsVisible} 
+          onAddTask={addTaskHandler} 
+          onCancel = {endAddTaskHandler}
+      />
       <View style={styles.tasksContainer}>
         <FlatList
           data={dailyTasks}
