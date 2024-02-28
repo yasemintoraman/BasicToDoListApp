@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { useState } from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 
-import TaskItem from './components/TaskItem';
-import TaskInput from './components/TaskInput';
+import TaskItem from "./components/TaskItem";
+import TaskInput from "./components/TaskInput";
 
 export default function App() {
   const [dailyTasks, setDailyTasks] = useState([]);
@@ -14,13 +14,26 @@ export default function App() {
     ]);
   }
 
+  function deleteTaskHandler(id) {
+    setDailyTasks((currentDailyTasks) => {
+      return currentDailyTasks.filter((task) => task.id !== id);
+    });
+  }
+
   return (
     <View style={styles.appContainer}>
+      <TaskInput onAddTask={addTaskHandler} />
       <View style={styles.inputContainer}>
         <FlatList
           data={dailyTasks}
           renderItem={(itemData) => {
-            return <TaskItem text = {itemData.item.text} />;
+            return (
+              <TaskItem
+                text={itemData.item.text}
+                id={itemData.item.id}
+                onDeleteItem={deleteTaskHandler}
+              />
+            );
           }}
           keyExtractor={(item, index) => {
             return item.id;

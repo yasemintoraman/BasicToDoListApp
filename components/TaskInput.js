@@ -18,7 +18,7 @@ function TaskInput(props) {
       <TextInput
         style={styles.textInput}
         placeholder="Your daily to-do!"
-        onChangeText={goalInputHandler}
+        onChangeText={taskInputHandler}
         value={enteredTaskText}
       />
       <Button title="Add Task" onPress={addTaskHandler} />
